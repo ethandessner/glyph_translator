@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* Removed unsupported @theme at-rule; Tailwind v4 uses CSS variables already. */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Creepy pixel satanic vibe theme additions */
+/* Palette: deep near-black, desaturated purples, ember reds */
+:root {
+  --pixel-bg: #050507;
+  --pixel-bg-alt: #0b0d11;
+  --pixel-red: #8a0c0c;
+  --pixel-red-bright: #ff2222;
+  --pixel-glow: #ff2e2e;
+  --pixel-outline: #230000;
+  --pixel-accent: #441111;
+}
+
+.occult-bg {
+  background:
+    repeating-linear-gradient(0deg, var(--pixel-bg) 0 2px, var(--pixel-bg-alt) 2px 4px),
+    radial-gradient(circle at 30% 40%, rgba(90,0,0,0.15), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(100,0,10,0.12), transparent 65%);
+  background-blend-mode: multiply, normal;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Subtle moving noise overlay */
+.occult-bg:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">\n<rect width="64" height="64" fill="black"/>\n<g fill="%23ffffff" fill-opacity="0.04">\n<rect x="2" y="3" width="1" height="1"/>\n<rect x="12" y="23" width="1" height="1"/>\n<rect x="22" y="13" width="1" height="1"/>\n<rect x="32" y="33" width="1" height="1"/>\n<rect x="42" y="53" width="1" height="1"/>\n<rect x="52" y="43" width="1" height="1"/>\n<rect x="6" y="55" width="1" height="1"/>\n<rect x="58" y="7" width="1" height="1"/>\n</g></svg>');
+  mix-blend-mode: overlay;
+  animation: noiseMove 9s linear infinite;
+  opacity: 0.55;
+}
+
+@keyframes noiseMove {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(12px, -8px); }
+  100% { transform: translate(0,0); }
+}
+
+/* Flicker animation for glowing red elements */
+@keyframes emberFlicker {
+  0%, 100% { filter: drop-shadow(0 0 0 var(--pixel-glow)); opacity: 0.85; }
+  33% { filter: drop-shadow(0 0 4px var(--pixel-glow)); opacity: 1; }
+  66% { filter: drop-shadow(0 0 2px var(--pixel-red-bright)); opacity: 0.95; }
+}
+
+.glyph-translator-container {
+  border: 2px solid var(--pixel-outline);
+  background: linear-gradient(145deg, #0d0f13 0%, #08090c 50%, #060608 100%);
+  box-shadow: 0 0 0 2px #140404, 0 0 18px -4px #1c0000, 0 0 42px -6px var(--pixel-red);
+  position: relative;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.glyph-translator-container:before, .glyph-translator-container:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px dashed rgba(255,34,34,0.2);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.glyph-translator-container:after { animation: emberFlicker 7s infinite; }
+
+.glyph-item {
+  image-rendering: pixelated;
+  background: #150202;
+  padding: 4px;
+  border: 1px solid #2d0000;
+  border-radius: 2px;
+  transition: transform 0.15s, box-shadow 0.3s;
+}
+.glyph-item:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 0 0 2px #2d0000, 0 0 12px -2px var(--pixel-red-bright);
+}
+
+.occult-button {
+  background: var(--pixel-red);
+  color: #ffe5e5;
+  border: 2px solid #2d0000;
+  font-family: var(--font-pixel), monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.6rem 1rem;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  position: relative;
+  transition: background 0.25s, box-shadow 0.25s;
+}
+.occult-button:hover {
+  background: var(--pixel-red-bright);
+  box-shadow: 0 0 0 2px #2d0000, 0 0 18px -4px var(--pixel-red-bright);
+}
+.occult-button:active { background: #5a0606; }
+
+textarea, input[type="number"] {
+  background: #0b0d10;
+  border: 2px solid #1f0000;
+  color: #d9c5c5;
+  font-family: var(--font-pixel), monospace;
+}
+textarea:focus, input[type="number"]:focus { outline: 2px solid var(--pixel-red-bright); }
+
+code {
+  background: #0f1115 !important;
+  border: 1px solid #210000;
+  box-shadow: inset 0 0 12px #120000;
+  font-family: var(--font-pixel), monospace;
+  color: #ffbbbb;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-occult), var(--font-drip), serif;
+  color: var(--pixel-red-bright);
+  text-shadow: 0 0 6px #370000, 0 0 14px #220000, 0 0 28px rgba(255,34,34,0.3);
+  letter-spacing: 2px;
+}
+
+/* Alternate dripping accent for small headings */
+.drip-accent {
+  font-family: var(--font-drip), var(--font-occult), serif;
+  animation: emberFlicker 5s infinite;
+}
+
+/* ===================== Corrupted / Glitch Text Effects ===================== */
+@keyframes corruptShift {
+  0% { transform: translate(0,0); }
+  20% { transform: translate(1px,-1px); }
+  40% { transform: translate(-2px,1px); }
+  60% { transform: translate(2px,0); }
+  80% { transform: translate(-1px,2px); }
+  100% { transform: translate(0,0); }
+}
+@keyframes corruptClip {
+  0% { clip-path: inset(0 0 0 0); }
+  25% { clip-path: inset(10% 0 5% 0); }
+  50% { clip-path: inset(2% 0 12% 0); }
+  75% { clip-path: inset(8% 0 3% 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+@keyframes corruptHue {
+  0%,100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(-25deg) saturate(140%); }
+}
+
+.corrupt {
+  position: relative;
+  display: inline-block;
+  animation: corruptHue 6s linear infinite;
+}
+.corrupt[data-intensity="high"] { animation-duration: 3.5s; }
+
+.corrupt .corrupt-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: corruptShift 0.8s steps(2,end) infinite, corruptClip 2.4s linear infinite;
+  opacity: 0.35;
+}
+.corrupt .corrupt-layer.red { color: #ff2e2e; text-shadow: 1px 0 2px #ff2e2e; }
+.corrupt .corrupt-layer.green { color: #3aff3a; text-shadow: -1px 0 2px #3aff3a; }
+.corrupt .corrupt-layer.blue { color: #3a66ff; text-shadow: 0 0 3px #3a66ff; }
+
+.corrupt .char {
+  display: inline-block;
+  animation: corruptShift 1.6s infinite;
+}
+.corrupt[data-intensity="high"] .char { animation-duration: 0.9s; }
+
+/* Scanline overlay for corruption */
+.corrupt:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient( to bottom, rgba(255,0,0,0.08) 0 2px, transparent 2px 4px );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: corruptShift 5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corrupt, .corrupt .corrupt-layer, .corrupt .char { animation: none !important; }
+  .corrupt:after { display: none; }
+}
+
+label span, p, .text-xs, .text-sm, .text-lg {
+  color: #c7b3b3;
+}
